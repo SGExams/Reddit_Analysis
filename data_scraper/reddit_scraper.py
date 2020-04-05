@@ -50,7 +50,7 @@ SGEXAMS = REDDIT_USER.subreddit("SGExams")
 
 # Sorting
 post_counter = 1
-for post in SGEXAMS.new(limit=10):
+for post in SGEXAMS.new(limit=1000):
   comment_counter = 1
 
   try:
