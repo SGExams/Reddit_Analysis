@@ -19,6 +19,7 @@ import time
 import data_dict
 reddit_data = data_dict.reddit_data
 
+
 # Reddit API Login
 def reddit_api_login(REDDIT_CLIENT, REDDIT_SECRET, REDDIT_USER_NAME, REDDIT_USER_PW):
   """ Reddit API Login Credentials.
@@ -50,7 +51,7 @@ SGEXAMS = REDDIT_USER.subreddit("SGExams")
 
 # Sorting
 post_counter = 1
-for post in SGEXAMS.new(limit=1000):
+for post in SGEXAMS.new(limit=10):
   comment_counter = 1
 
   try:
@@ -63,14 +64,14 @@ for post in SGEXAMS.new(limit=1000):
     reddit_data['post']['created_at'].append(post.created_utc)
     print('Post Content:\n')
     print(f'{post.selftext}\n')
-    reddit_data['post']['body'].append(post.selftext)
+    reddit_data['post']['body'].append(str(post.selftext))
     print(f'Post URL: {post.url}\n')
     reddit_data['post']['url'].append(post.url)
     print(f'Post Score: {post.score}\n')
-    reddit_data['post']['score'].append(post.score)
+    reddit_data['post']['score'].append(float(post.score))
 
   except:
-    print('Error Encountered During Comment Scraping')
+    print('Error Encountered During Post Scraping')
     continue
 
   print('Comment Section:\n')
@@ -79,19 +80,21 @@ for post in SGEXAMS.new(limit=1000):
   temp_comment_scores = []
   post.comments.replace_more(limit=None)
   for comment in post.comments.list():
-    print(f'Comment {comment_counter}:\n')
-    print(f"{comment.body}\n")
-    temp_comment.append(comment.body)
+    print(f'Comment {str(comment_counter)}:\n')
+    print(f"{str(comment.body)}\n")
+    temp_comment.append(str(comment.body))
     print(f'Comment {comment_counter} was created at {comment.created_utc}\n')
     temp_comment_createdat.append(comment.created_utc)
     print(f'Comment {comment_counter} Score: {comment.score}')
-    temp_comment_scores.append(comment.score)
+    temp_comment_scores.append(float(comment.score))
     print()
     comment_counter += 1
+    
+    
 
-  reddit_data['comment']['body'].append(temp_comment)
-  reddit_data['comment']['created_at'].append(temp_comment_createdat)
-  reddit_data['comment']['score'].append(temp_comment_scores)
+  reddit_data['comment']['body'].append(list(temp_comment))
+  reddit_data['comment']['created_at'].append(list(temp_comment_createdat))
+  reddit_data['comment']['score'].append(list(temp_comment_scores))
   time.sleep(0.1)
   post_counter += 1
 
@@ -101,7 +104,7 @@ reddit_df = pd.DataFrame({'post_title': reddit_data['post']['title'],
                           'post_body': reddit_data['post']['body'],
                           'post_url': reddit_data['post']['url'],
                           'post_score': reddit_data['post']['score'],
-                          'comment_body': reddit_data['comment']['body'],
+           ""               'comment_body': reddit_data['comment']['body'],
                           'comment_created_at': reddit_data['comment']['created_at'],
                           'comment_score': reddit_data['comment']['score']})
 
@@ -109,4 +112,3 @@ reddit_df = reddit_df.drop_duplicates(subset=['post_url'], keep='first')
 
 reddit_df.to_csv('./storage/test.csv', index=False)
 
-print(reddit_df)
