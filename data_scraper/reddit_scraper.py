@@ -23,18 +23,14 @@ reddit_data = data_dict.reddit_data
 # Reddit API Login
 def reddit_api_login(REDDIT_CLIENT, REDDIT_SECRET, REDDIT_USER_NAME, REDDIT_USER_PW):
   """ Reddit API Login Credentials.
-
-
   Parameters:
   REDDIT_CLIENT (str): Reddit Client ID,
   REDDIT_SECRET (str): Reddit Client Secret,
   REDDIT_USER_NAME (str): Reddit Username,
   REDDIT_USER_PW (str): Reddit User Password
-
   
   Returns:
   class: praw.reddit.Reddit
-
   """
   reddit = praw.Reddit(client_id=REDDIT_CLIENT,
                        client_secret=REDDIT_SECRET,
@@ -51,21 +47,19 @@ SGEXAMS = REDDIT_USER.subreddit("SGExams")
 
 # Sorting
 post_counter = 1
-
-for post in SGEXAMS.new(limit=995):
+for post in SGEXAMS.new(limit=10):
   comment_counter = 1
 
-  # Scraping Posts (Title, Flair, Created_At, Body, URL, Score)
   try:
     print(f'SGExams Subreddit Post {post_counter}\n')
-    print(f'Reddit Post Title: {str(post.title)}\n')
-    reddit_data['post']['title'].append(str(post.title))
-    print(f'Flair: {str(post.link_flair_text)}\n')
-    reddit_data['post']['flair'].append(str(post.link_flair_text))
+    print(f'Reddit Post Title: {post.title}\n')
+    reddit_data['post']['title'].append(post.title)
+    print(f'Flair: {post.link_flair_text}\n')
+    reddit_data['post']['flair'].append(post.link_flair_text)
     print(f'Created At (UTC): {post.created_utc}\n')
     reddit_data['post']['created_at'].append(post.created_utc)
     print('Post Content:\n')
-    print(f'{str(post.selftext)}\n')
+    print(f'{post.selftext}\n')
     reddit_data['post']['body'].append(str(post.selftext))
     print(f'Post URL: {post.url}\n')
     reddit_data['post']['url'].append(post.url)
@@ -74,50 +68,31 @@ for post in SGEXAMS.new(limit=995):
 
   except:
     print('Error Encountered During Post Scraping')
-    break
-  
-  # Comment Section
-  print('Comment Section:\n')
+    continue
 
+  print('Comment Section:\n')
   temp_comment = []
   temp_comment_createdat = []
   temp_comment_scores = []
-
   post.comments.replace_more(limit=None)
   for comment in post.comments.list():
-
-    try:
-      print(f'Comment {str(comment_counter)}:\n')
-      print(f"{str(comment.body)}\n")
-      temp_comment.append(str(comment.body))
-      print(f'Comment {comment_counter} was created at {comment.created_utc}\n')
-      temp_comment_createdat.append(comment.created_utc)
-      print(f'Comment {comment_counter} Score: {comment.score}')
-      temp_comment_scores.append(float(comment.score))
-      print()
-      comment_counter += 1
-
-    except: 
-      print('Error Encountered During Comment Scraping')
-      break
+    print(f'Comment {str(comment_counter)}:\n')
+    print(f"{str(comment.body)}\n")
+    temp_comment.append(str(comment.body))
+    print(f'Comment {comment_counter} was created at {comment.created_utc}\n')
+    temp_comment_createdat.append(comment.created_utc)
+    print(f'Comment {comment_counter} Score: {comment.score}')
+    temp_comment_scores.append(float(comment.score))
+    print()
+    comment_counter += 1
     
+    
+
   reddit_data['comment']['body'].append(list(temp_comment))
   reddit_data['comment']['created_at'].append(list(temp_comment_createdat))
   reddit_data['comment']['score'].append(list(temp_comment_scores))
-
   time.sleep(0.1)
   post_counter += 1
-
-# For Error Checking
-print(len(reddit_data['post']['title']))
-print(len(reddit_data['post']['flair']))
-print(len(reddit_data['post']['created_at']))
-print(len(reddit_data['post']['body']))
-print(len(reddit_data['post']['url']))
-print(len(reddit_data['post']['score']))
-print(len(reddit_data['comment']['body']))
-print(len(reddit_data['comment']['created_at']))
-print(len(reddit_data['comment']['score']))
 
 reddit_df = pd.DataFrame({'post_title': reddit_data['post']['title'],
                           'post_flair': reddit_data['post']['flair'],
@@ -132,5 +107,3 @@ reddit_df = pd.DataFrame({'post_title': reddit_data['post']['title'],
 reddit_df = reddit_df.drop_duplicates(subset=['post_url'], keep='first')
 
 reddit_df.to_csv('./storage/test.csv', index=False)
-
-print(reddit_df)
