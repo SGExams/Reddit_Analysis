@@ -23,18 +23,14 @@ reddit_data = data_dict.reddit_data
 # Reddit API Login
 def reddit_api_login(REDDIT_CLIENT, REDDIT_SECRET, REDDIT_USER_NAME, REDDIT_USER_PW):
   """ Reddit API Login Credentials.
-
-
   Parameters:
   REDDIT_CLIENT (str): Reddit Client ID,
   REDDIT_SECRET (str): Reddit Client Secret,
   REDDIT_USER_NAME (str): Reddit Username,
   REDDIT_USER_PW (str): Reddit User Password
-
   
   Returns:
   class: praw.reddit.Reddit
-
   """
   reddit = praw.Reddit(client_id=REDDIT_CLIENT,
                        client_secret=REDDIT_SECRET,
@@ -104,11 +100,10 @@ reddit_df = pd.DataFrame({'post_title': reddit_data['post']['title'],
                           'post_body': reddit_data['post']['body'],
                           'post_url': reddit_data['post']['url'],
                           'post_score': reddit_data['post']['score'],
-           ""               'comment_body': reddit_data['comment']['body'],
+                          'comment_body': reddit_data['comment']['body'],
                           'comment_created_at': reddit_data['comment']['created_at'],
                           'comment_score': reddit_data['comment']['score']})
 
 reddit_df = reddit_df.drop_duplicates(subset=['post_url'], keep='first')
 
 reddit_df.to_csv('./storage/test.csv', index=False)
-
