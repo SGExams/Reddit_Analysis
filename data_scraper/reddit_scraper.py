@@ -89,4 +89,4 @@ reddit_post_df = pd.DataFrame(reddit_posts, columns=['post_title', 'post_flair',
 reddit_comment_df = pd.DataFrame(reddit_comments, columns=['comment_body', 'comment_created_at', 'comment_score'])
 
 reddit_post_info = pd.concat([reddit_post_df, reddit_comment_df], axis=1)
-reddit_post_info.to_csv('./storage/testidk.csv', index=False)
+reddit_post_info.to_csv('./storage/sgexamsdata.csv', index=False)
