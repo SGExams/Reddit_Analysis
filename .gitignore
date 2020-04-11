@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # Config
-config.py
+#config.py
 
 #Virtual Environment (conrad running on computer)
 /data_scraper/sgexams
