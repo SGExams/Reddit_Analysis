@@ -16,6 +16,7 @@ print(f'This is your reddit username: {REDDIT_USER_NAME}.\nThis is your reddit p
 import pandas as pd
 import praw
 import time
+import datetime
 
 # Reddit API Login
 def reddit_api_login(REDDIT_CLIENT, REDDIT_SECRET, REDDIT_USER_NAME, REDDIT_USER_PW):
@@ -88,5 +89,7 @@ for post in SGEXAMS.new(limit=1000):
 reddit_post_df = pd.DataFrame(reddit_posts, columns=['post_title', 'post_flair', 'post_created_at', 'post_body', 'post_url', 'post_score'])
 reddit_comment_df = pd.DataFrame(reddit_comments, columns=['comment_body', 'comment_created_at', 'comment_score'])
 
+dt = datetime.datetime.today() #gets today's date
+
 reddit_post_info = pd.concat([reddit_post_df, reddit_comment_df], axis=1)
-reddit_post_info.to_csv('./storage/sgexamsdata.csv', index=False)
+reddit_post_info.to_csv(f'./storage/{dt.year}-{dt.month}-{dt.day}-{dt.hour}-{dt.minute}-{dt.second}.csv', index=False)
