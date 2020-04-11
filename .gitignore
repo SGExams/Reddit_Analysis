@@ -133,3 +133,4 @@ config.py
 
 #Virtual Environment (conrad running on computer)
 /data_scraper/sgexams
+data_scraper/config.py
