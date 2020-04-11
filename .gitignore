@@ -132,4 +132,4 @@ dmypy.json
 config.py
 
 #Virtual Environment (conrad running on computer)
-/datascraper/sgexams
+/data_scraper/sgexams
