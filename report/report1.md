@@ -44,3 +44,8 @@ sentiment scores.
 <p align='center' style='font-size: 25px'>HBL Post Comments</p>
 
 ![HBL_comments](https://user-images.githubusercontent.com/51396102/79229886-54231180-7e96-11ea-98ce-a68dc2f9abeb.png)
+
+<p align='center' style='font-size: 25px'>HBL Sentiment Analysis</p>
+
+![sentiment_analysis](https://user-images.githubusercontent.com/51396102/79230228-d7dcfe00-7e96-11ea-8b22-e1844a4cf479.png)
+
