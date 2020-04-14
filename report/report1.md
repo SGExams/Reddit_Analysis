@@ -1,0 +1,37 @@
+# SGExams HBL Sentiment Analysis (Reddit Data)
+## Brief Description of the Data
+We gathered reddit data based on PRAW's API and decided to collect these columns which are ``post_title``, ``post_flair``, ``post_createdat``, ``post_body``, ``post_url``, ``post_score``, ``comment_body``, ``comment_createdat`` and ``comment_score``.
+
+Here is the first five rows of the data:
+
+![image](https://user-images.githubusercontent.com/51396102/79226662-55057480-7e91-11ea-8c37-66f2c4c3437c.png)
+
+## Data Collection
+
+We used ``PRAW's`` API for the data collection. Basically, we collected a batch of 1000 posts (``rate limiting issue``) (i.e. We cannot scrape more than 1000 posts at a time for ``PRAW``) for 5 days straight to collect as much HBL related data as possible. 
+
+**We are planning to implement better code to bypass the rate limiting while exploring Pushshift to see if it better suits our needs.*
+
+## Data Cleaning
+
+After we collected these batches, we realised there might be a posibility that some data has been repeated. Therefore, we used the pandas function ``drop_duplicate`` to drop the data based on the subset ``post_url`` as it is unique.
+
+Furthermore, we used regular expressions to filter out the flairs in the post titles so that it won't be included in the word cloud below. 
+
+Lastly, we changed the datetime from seconds to proper timing a.k.a. (year, month, day, hour, minute, seconds)
+
+## Filtering HBL Related Posts
+
+We basically implemented a regex function for filtering multiple keywords at the same time. The keywords that we have filtered are ``hbl``, ``home based learning`` and ``e learning``. 
+
+All these have been set to non-case sensitive filtering. We did three conditions for the filtering which are ``post_title``, ``post_body`` and ``post_comments``. So, whenever we filter the data, the code will check for keywords that are either in title, body or comments so that we get more accurate data output.
+
+In total, we had 132 posts relating to HBL after the strict filtering.
+
+## Data Visualization 
+
+We did a few wordclouds and a distribution of the sentiment scores. 
+
+                                        Here are the visualizations:
+                                        
+![hbl_title](https://user-images.githubusercontent.com/51396102/79229085-0bb72400-7e95-11ea-8265-42c45bc88c9c.png)
