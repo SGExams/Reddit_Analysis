@@ -30,8 +30,17 @@ In total, we had 132 posts relating to HBL after the strict filtering.
 
 ## Data Visualization 
 
-We did a few wordclouds and a distribution of the sentiment scores. 
+We did a few wordclouds and a distribution of the 
+sentiment scores. 
 
-                                        Here are the visualizations:
-                                        
+<p align='center' style='font-size: 25px'>HBL Post Titles</p>
+
 ![hbl_title](https://user-images.githubusercontent.com/51396102/79229085-0bb72400-7e95-11ea-8265-42c45bc88c9c.png)
+
+<p align='center' style='font-size: 25px'>HBL Post Body</p>
+
+![HBL_body](https://user-images.githubusercontent.com/51396102/79229835-3eade780-7e96-11ea-9bd7-0afebc0f1eca.png)
+
+<p align='center' style='font-size: 25px'>HBL Post Comments</p>
+
+![HBL_comments](https://user-images.githubusercontent.com/51396102/79229886-54231180-7e96-11ea-98ce-a68dc2f9abeb.png)
