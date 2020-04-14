@@ -49,3 +49,12 @@ sentiment scores.
 
 ![sentiment_analysis](https://user-images.githubusercontent.com/51396102/79230228-d7dcfe00-7e96-11ea-8b22-e1844a4cf479.png)
 
+## Data Analysis
+
+``VADER`` (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool that is specifically attuned to sentiments expressed in social media. 
+
+The ``Compound`` score is a metric that calculates the sum of all the lexicon ratings which have been normalized between ``-1(most extreme negative) and +1 (most extreme positive)``.
+
+It is assumed that each ``comment`` and ``submission`` carry ``independent sentiments``. The weighted score of a comment/submission is thus the text's ``compound score`` multiplied by its ``individual score``.
+
+A ``density plot`` (gaussian normalised) of scores are then plotted.
